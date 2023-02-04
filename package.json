@@ -12,7 +12,8 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "test": "ava",
-    "watch": "ava --watch"
+    "watch": "ava --watch",
+    "prepublish": "npm run test && npm run build"
   },
   "keywords": [
     "sveltekit",
