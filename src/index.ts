@@ -170,8 +170,18 @@ function buildPageEntries(
  * provided adapter from the first argument. This wrapped adapter will appear
  * as `<adapter> + sitemap` in SvelteKit, where `<adapter>` is the name of the
  * original adapter.
+ *
+ *
+ *  * @example
+ * ```ts
+ * {
+ *   kit: {
+ *     adapter: sitemapWrapAdapter(adapter())
+ *   }
+ * }
+ * ```
  */
-export function sitemapWrapAdapter(adapter: Adapter, options: Partial<Options>): Adapter {
+export function sitemapWrapAdapter(adapter: Adapter, options?: Partial<Options>): Adapter {
 	const resolvedOptions = {...defaultOptions, ...options};
 
 	return wrapAdapter(adapter, nameTemplate, {
