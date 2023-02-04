@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "lib",
     "sourceMap": true,
-    "declaration": true
+    "declaration": true,
+    "ignoreDeprecations": "5.0"
   }
 }
