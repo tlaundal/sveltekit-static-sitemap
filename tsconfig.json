@@ -1,0 +1,11 @@
+{
+  "extends": "@tsconfig/node-lts-strictest-esm/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib/",
+    "sourceMap": true,
+    "declaration": true,
+    "ignoreDeprecations": "5.0"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.test.ts"]
+}
