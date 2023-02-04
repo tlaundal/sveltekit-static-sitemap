@@ -1,6 +1,6 @@
-import test from "ava";
-import { sitemap } from ".";
+import test from 'ava';
+import {sitemap} from '.';
 
-test("sitemap() returns undefined", (t) => {
-  t.is(sitemap(), undefined);
+test('sitemap is a function', t => {
+	t.assert(sitemap instanceof Function);
 });

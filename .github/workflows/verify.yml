@@ -6,8 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  checks: write
+  contents: write
+
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,5 +20,10 @@ jobs:
         with:
           node-version: 18
       - run: npm ci
+      - name: Lint
+        uses: wearerequired/lint-action@v2
+        with:
+          xo: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run build
       - run: npm test
