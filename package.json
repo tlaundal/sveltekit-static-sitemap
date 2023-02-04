@@ -18,10 +18,18 @@
     "static",
     "prerender"
   ],
-  "author": "Tobias Laundal",
+  "author": "Tobias Lundal",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@tsconfig/node-lts-strictest-esm": "^18.12.1",
+    "husky": "^8.0.3",
     "typescript": "^4.9.5"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
