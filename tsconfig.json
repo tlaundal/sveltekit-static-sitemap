@@ -3,8 +3,7 @@
   "compilerOptions": {
     "outDir": "lib/",
     "sourceMap": true,
-    "declaration": true,
-    "ignoreDeprecations": "5.0"
+    "declaration": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.test.ts"]

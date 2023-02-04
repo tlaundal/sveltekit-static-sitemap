@@ -14,6 +14,7 @@
     "build:watch": "tsc --watch",
     "test": "ava",
     "watch": "ava --watch",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --readme none --githubPages false ./src/index.ts",
     "prepublish": "npm run build && npm run test"
   },
   "keywords": [
@@ -29,7 +30,10 @@
     "@commitlint/config-conventional": "^17.4.2",
     "@tsconfig/node-lts-strictest-esm": "^18.12.1",
     "ava": "^5.1.1",
+    "eslint-plugin-tsdoc": "^0.2.17",
     "husky": "^8.0.3",
+    "typedoc": "^0.23.24",
+    "typedoc-plugin-markdown": "^3.14.0",
     "typescript": "^4.9.5",
     "xo": "^0.53.1"
   },
@@ -52,7 +56,11 @@
     ]
   },
   "xo": {
+    "plugins": [
+      "eslint-plugin-tsdoc"
+    ],
     "rules": {
+      "tsdoc/syntax": "warn",
       "import/extensions": [
         "error",
         "always"

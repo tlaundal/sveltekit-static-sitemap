@@ -119,7 +119,7 @@ const defaultOptions: Options = {
 const nameTemplate = '%s + sitemap';
 
 function buildPageEntries(
-	paths: Iterable<string>,
+	paths: IterableIterator<string>,
 	options: Options,
 ) {
 	const pages: Record<string, Partial<PageDetails>> = {};
@@ -137,8 +137,6 @@ function buildPageEntries(
 }
 
 /**
- * # sveltekit-static-sitemap
- *
  * This function is the entry point for sveltekit-static-sitemap. It takes a
  * SvelteKit adapter and returns a wrapped version which will retrieve a
  * sitemap together with the static assets.
@@ -150,13 +148,13 @@ function buildPageEntries(
  * See the `options` argument for how to add more pages.
  *
  *
- * @param adapter The SvelteKit adapter to wrap with sitemap generation.
+ * @param adapter - The SvelteKit adapter to wrap with sitemap generation.
  *
  * The sitemap will be provided to the adapter together with other static
  * assets and prerendered pages.
  *
  *
- * @param options Configuration of the sitemap.
+ * @param options - Configuration of the sitemap.
  *
  * The `defaults` key defines the default values for each url in the sitemap.
  *
