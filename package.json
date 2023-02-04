@@ -3,8 +3,14 @@
   "version": "0.0.1",
   "description": "Generate sitemap at buildtime for SvelteKit applications with prerendered routes. Works with any adapter.",
   "main": "lib/index.js",
+  "types": "lib/index.ts",
+  "files": [
+    "lib"
+  ],
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch": "tsc --watch"
   },
   "keywords": [
     "sveltekit",
@@ -13,5 +19,9 @@
     "prerender"
   ],
   "author": "Tobias Laundal",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/node-lts-strictest-esm": "^18.12.1",
+    "typescript": "^4.9.5"
+  }
 }
