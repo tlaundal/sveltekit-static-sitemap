@@ -9,10 +9,11 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./lib/; tsc",
     "build:watch": "tsc --watch",
     "test": "ava",
-    "watch": "ava --watch"
+    "watch": "ava --watch",
+    "prepublish": "npm run build && npm run test"
   },
   "keywords": [
     "sveltekit",
