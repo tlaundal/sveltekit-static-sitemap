@@ -4,11 +4,11 @@ import type {Builder} from '@sveltejs/kit';
 import type {Options, PageDetails} from '..';
 import {renderSitemap} from './render-sitemap.js';
 
-function buildPageEntries(
-	paths: IterableIterator<string>,
+export function buildPageEntries(
+	paths: Iterable<string>,
 	options: Options,
 ) {
-	const pages: Record<string, Partial<PageDetails>> = {};
+	const pages: Record<string, Partial<PageDetails>> = {...options.pages};
 	for (const path of paths) {
 		if (!(path in pages)) {
 			pages[path] = {};
