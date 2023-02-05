@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+ABRT_FILE="${1}.aborted"
+if [ -f "$ABRT_FILE" ]; then
+    # Only recover the message if message source is empty, ie. no message was
+    # provided.
+    if [ -z "${2}" ]; then
+        TEMP_FILE="${TMPDIR:-/tmp}/recover-commit-msg.$$"
+        printf '# Recovered commit message\n' | cat - "$ABRT_FILE" "${1}" > "$TEMP_FILE"
+        cp "$TEMP_FILE" "${1}"
+        rm "$TEMP_FILE"
+    fi
+
+    rm "$ABRT_FILE"
+fi

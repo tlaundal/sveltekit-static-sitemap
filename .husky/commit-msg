@@ -1,23 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# If we have a STDIN, use it, otherwise get one
-if tty >/dev/null 2>&1; then
-  TTY="$(tty)"
-else
-  TTY=/dev/tty
+if ! npx --no -- commitlint --edit "${1}"; then
+    # Copy the non-comment lines
+    grep -v '^#' "${1}" > "${1}.aborted"
+
+    echo "If using the CLI, your message will be recovered if you commit again without a message."
+    exit 1
 fi
-
-while ! npx --no -- commitlint --edit "${1}"; do
-    # exit if we are not in in an interactive terminal
-    ! [ -t 1 ] && exit 1
-
-    read -p "Open commit in editor? (Y/n) " yn < "$TTY"
-    if [ "$yn" = "" ]; then
-        yn='Y'
-    fi
-    case $yn in
-      [Yy] ) "$(git var GIT_EDITOR)" "${1}";;
-      * ) exit 1;;
-    esac
-done

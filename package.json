@@ -15,7 +15,8 @@
     "test": "ava",
     "watch": "ava --watch",
     "docs": "typedoc --plugin typedoc-plugin-markdown --readme none --githubPages false ./src/index.ts",
-    "prepublish": "npm run build && npm run test"
+    "prepublish": "npm run build && npm run test",
+    "prepare": "husky install"
   },
   "keywords": [
     "sveltekit",
