@@ -1,8 +1,6 @@
-import {writeFileSync} from 'node:fs';
-import {join} from 'node:path';
 import type {Adapter} from '@sveltejs/kit';
 import {wrapAdapter} from './internal/wrap-adapter.js';
-import {renderSitemap} from './internal/render-sitemap.js';
+import {buildSitemap} from './internal/build-sitemap.js';
 
 /**
  * Details about a page in the sitemap.
@@ -118,24 +116,6 @@ const defaultOptions: Options = {
 
 const nameTemplate = '%s + sitemap';
 
-function buildPageEntries(
-	paths: IterableIterator<string>,
-	options: Options,
-) {
-	const pages: Record<string, Partial<PageDetails>> = {};
-	for (const path of paths) {
-		if (!(path in pages)) {
-			pages[path] = {};
-		}
-	}
-
-	return Object.entries(pages).map(([path, page]) => ({
-		loc: options.origin + path,
-		...options.defaults,
-		...page,
-	}));
-}
-
 /**
  * This function is the entry point for sveltekit-static-sitemap. It takes a
  * SvelteKit adapter and returns a wrapped version which will retrieve a
@@ -189,15 +169,9 @@ export function sitemapWrapAdapter(adapter: Adapter, options?: Partial<Options>)
 			resolvedOptions.origin = resolvedOptions.origin ?? this.config.kit.prerender.origin;
 		},
 		writePrerendered(original, dest) {
-			const pages = buildPageEntries(this.prerendered.pages.keys(), resolvedOptions);
-			const sitemap = renderSitemap(pages);
-
-			const target = join(dest, resolvedOptions.sitemapFile);
-			writeFileSync(target, sitemap);
-
-			// We call the original here in the end, in case the prerendered
+			// We call the original last, in case the prerendered
 			// bundle contains a sitemap which should take priority
-			return [...original(dest), resolvedOptions.sitemapFile];
+			return [...buildSitemap(this, resolvedOptions, dest), ...original(dest)];
 		},
 	});
 }
