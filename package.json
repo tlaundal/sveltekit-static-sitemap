@@ -1,6 +1,6 @@
 {
   "name": "sveltekit-static-sitemap",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate sitemap at buildtime for SvelteKit applications with prerendered routes. Works with any adapter.",
   "main": "lib/index.js",
   "types": "lib/index.ts",
