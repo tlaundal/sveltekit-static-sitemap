@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/tlaundal/sveltekit-static-sitemap/compare/v1.0.1...v1.0.2) (2023-02-07)
+
+
+### Bug Fixes
+
+* prevent undefined in sitemap ([565ca15](https://github.com/tlaundal/sveltekit-static-sitemap/commit/565ca15eb715fa32ed0ffc82f989438ea1979c99))
+
 ## [1.0.1](https://github.com/tlaundal/sveltekit-static-sitemap/compare/v1.0.0...v1.0.1) (2023-02-05)
 
 
