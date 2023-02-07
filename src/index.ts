@@ -5,6 +5,9 @@ import {buildSitemap} from './internal/build-sitemap.js';
 /**
  * Details about a page in the sitemap.
  *
+ * Any of these can be left undefined to skip that property for this page in
+ * the sitemap.
+ *
  * @see {@link https://www.sitemaps.org | sitemaps.org} for further details.
  * Some of the documentation here is copied from there.
  */
@@ -15,7 +18,7 @@ export type PageDetails = {
 	 * Should be in {@link https://www.w3.org/TR/NOTE-datetime | W3C Datetime}
 	 * format, which is a subset of ISO8601.
 	 */
-	lastmod: string;
+	lastmod?: string | undefined;
 
 	/**
 	 * Priority of this page relative to others on the site.
@@ -24,7 +27,7 @@ export type PageDetails = {
 	 * pages are compared to pages on other sites—it only lets the search
 	 * engines know which pages you deem most important for the crawlers.
 	 */
-	priority: number;
+	priority?: number | undefined;
 
 	/**
 	 * How frequently the page is likely to change.
@@ -36,7 +39,7 @@ export type PageDetails = {
 	 * each time they are accessed. The value `'never'` should be used to
 	 * describe archived URLs.
 	 */
-	changefreq: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+	changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never' | undefined;
 };
 
 /**
@@ -70,6 +73,9 @@ export type Options = {
 	 * }
 	 * ```
 	 *
+	 * To remove a field from the sitemap, set the value to `undefined`. The
+	 * field can still be introduced for a specific page in `pages`.
+	 *
 	 * @see {@link PageDetails} for documentation of the available fields.
 	 */
 	defaults: PageDetails;
@@ -81,6 +87,9 @@ export type Options = {
 	 * set specific properties on a page.
 	 *
 	 * The keys are the paths to the pages. For instance `/` or `/posts/1`.
+	 *
+	 * To remove a specific field for only this page, set the value to
+	 * `undefined`.
 	 *
 	 * @example
 	 * ```ts

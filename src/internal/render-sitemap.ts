@@ -2,9 +2,9 @@ import {trimMargin} from './utils.js';
 
 type UrlDefinition = {
 	loc: string;
-	lastmod: string;
-	priority: number;
-	changefreq: string;
+	lastmod?: string | undefined;
+	priority?: number | undefined;
+	changefreq?: string | undefined;
 };
 
 export function renderSitemap(pages: UrlDefinition[]) {
@@ -19,9 +19,9 @@ export function renderSitemap(pages: UrlDefinition[]) {
 			({loc, lastmod, priority, changefreq}) => `
 			<url>
 				<loc>${loc}</loc>
-				<lastmod>${lastmod}</lastmod>
-				<changefreq>${changefreq}</changefreq>
-				<priority>${priority}</priority>
+				${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
+				${changefreq ? `<changefreq>${changefreq}</changefreq>` : ''}
+				${priority ? `<priority>${priority}</priority>` : ''}
 			</url>`,
 		)
 		.join('\n')}
