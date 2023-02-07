@@ -1,5 +1,5 @@
 import test from 'ava';
-import {buildPageEntries} from './build-sitemap.js';
+import {buildPageEntries} from '../build-sitemap.js';
 
 const options = {
 	origin: 'http://example.com',
