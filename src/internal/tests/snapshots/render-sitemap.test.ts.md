@@ -1,4 +1,4 @@
-# Snapshot report for `src/internal/render-sitemap.test.ts`
+# Snapshot report for `src/internal/tests/render-sitemap.test.ts`
 
 The actual snapshot is saved in `render-sitemap.test.ts.snap`.
 

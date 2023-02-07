@@ -1,5 +1,5 @@
 import test from 'ava';
-import {renderSitemap} from './render-sitemap.js';
+import {renderSitemap} from '../render-sitemap.js';
 
 test('render-sitemap renders the same xml', t => {
 	t.snapshot(renderSitemap([

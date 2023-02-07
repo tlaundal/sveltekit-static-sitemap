@@ -1,6 +1,6 @@
 import test from 'ava';
 import type {Builder, Adapter} from '@sveltejs/kit/types';
-import {wrapAdapter} from './wrap-adapter.js';
+import {wrapAdapter} from '../wrap-adapter.js';
 
 test('wrap-adapter wraps an adapter', t => {
 	const builder: Partial<Builder> = {
