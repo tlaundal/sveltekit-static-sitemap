@@ -22,6 +22,9 @@ import { sitemapWrapAdapter } from "sveltekit-static-sitemap";
 
 const config = {
   kit: {
+    prerender: {
+      origin: 'http://www.example.com',
+    }
     adapter: sitemapWrapAdapter(adapter()),
   },
 };
@@ -57,6 +60,8 @@ sitemapWrapAdapter(adapter(), {
 ## Configuration
 
 See the [documentation](docs/README.md#sitemapwrapadapter) for the `sitemapWrapAdapter` function.
+
+The hostname in the sitemap defaults to the hostname that the SvelteKit prerenderer uses, which is `sveltekit-prerender` if not set. To change this, it is recommended you set the `kit.prerender.origin` config value as shown in the example above, but you can also configure it for only the sitemap in either the `defaults` or per page config options, as described in the documentation link in the last paragraph.
 
 ## How does it work?
 
