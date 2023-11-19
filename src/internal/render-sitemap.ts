@@ -5,6 +5,7 @@ type UrlDefinition = {
 	lastmod?: string | undefined;
 	priority?: number | undefined;
 	changefreq?: string | undefined;
+	hook?(pageUrl: string): string;
 };
 
 export function renderSitemap(pages: UrlDefinition[]) {
@@ -16,12 +17,13 @@ export function renderSitemap(pages: UrlDefinition[]) {
 		>
 		${pages
 		.map(
-			({loc, lastmod, priority, changefreq}) => `
+			({loc, lastmod, priority, changefreq, hook}) => `
 			<url>
 				<loc>${loc}</loc>
 				${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
 				${changefreq ? `<changefreq>${changefreq}</changefreq>` : ''}
 				${priority ? `<priority>${priority}</priority>` : ''}
+				${hook ? hook(loc) : ''}
 			</url>`,
 		)
 		.join('\n')}

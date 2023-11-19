@@ -28,3 +28,9 @@ for (const prop of ['priority', 'changefreq', 'lastmod'] as const) {
 		t.snapshot(sitemap);
 	});
 }
+
+test('render-sitemap renders the sitemap with hook output', t => {
+	t.snapshot(renderSitemap([
+		{loc: '/', hook: _ => '<custom>tag</custom>'},
+	]));
+});
