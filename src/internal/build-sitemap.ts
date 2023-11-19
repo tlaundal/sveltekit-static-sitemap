@@ -1,4 +1,4 @@
-import {writeFileSync} from 'node:fs';
+import {writeFileSync, mkdirSync} from 'node:fs';
 import {join} from 'node:path';
 import type {Builder} from '@sveltejs/kit';
 import type {Options, PageDetails} from '..';
@@ -26,6 +26,7 @@ export function buildSitemap(builder: Builder, options: Options, dest: string) {
 	const pages = buildPageEntries(builder.prerendered.pages.keys(), options);
 	const sitemap = renderSitemap(pages);
 
+	mkdirSync(dest, { recursive: true });
 	const target = join(dest, options.sitemapFile);
 	writeFileSync(target, sitemap);
 
