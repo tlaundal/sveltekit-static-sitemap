@@ -53,6 +53,11 @@ sitemapWrapAdapter(adapter(), {
 
     // Other pages can be defined as well
     "/dynamic/page": {}, // Will inherit default values
+
+    // Each page can also inject custom XML
+    "/custom-sitemap-props": {
+      hook: (loc) => `<url-customtag>${loc}</url-customtag>`,
+    },
   },
 });
 ```
