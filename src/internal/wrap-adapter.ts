@@ -1,5 +1,5 @@
 import {format} from 'node:util';
-import type {Adapter, Builder} from '@sveltejs/kit/types';
+import type {Adapter, Builder} from '@sveltejs/kit';
 import {type OptionalFunctionsWithOriginal, isFunction, truthyEntries} from './utils.js';
 
 type BuilderWrap = OptionalFunctionsWithOriginal<Builder> & {
@@ -37,9 +37,9 @@ export function wrapAdapter(adapter: Adapter, nameTemplate: string, builderWrap:
 	return {
 		...adapter,
 		name: format(nameTemplate, adapter.name),
-		adapt(builder) {
+		async adapt(builder) {
 			builderWrap.adapt?.apply(builder);
-			return adapter.adapt(wrapBuilder(builder, builderWrap));
+			await Promise.resolve(adapter.adapt(wrapBuilder(builder, builderWrap)));
 		},
 	};
 }

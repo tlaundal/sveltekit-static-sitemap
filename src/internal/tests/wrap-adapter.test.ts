@@ -1,8 +1,8 @@
 import test from 'ava';
-import type {Builder, Adapter} from '@sveltejs/kit/types';
+import type {Builder, Adapter} from '@sveltejs/kit';
 import {wrapAdapter} from '../wrap-adapter.js';
 
-test('wrap-adapter wraps an adapter', t => {
+test('wrap-adapter wraps an adapter', async t => {
 	const builder: Partial<Builder> = {
 		getClientDirectory() {
 			return 'client';
@@ -24,5 +24,5 @@ test('wrap-adapter wraps an adapter', t => {
 
 	t.plan(2);
 	t.is(wrapped.name, 'original + test');
-	return wrapped.adapt(builder as any);
+	await Promise.resolve(wrapped.adapt(builder as unknown as Builder));
 });

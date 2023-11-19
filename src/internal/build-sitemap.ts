@@ -1,7 +1,7 @@
 import {writeFileSync, mkdirSync} from 'node:fs';
 import {join} from 'node:path';
 import type {Builder} from '@sveltejs/kit';
-import type {Options, PageDetails} from '..';
+import type {Options, PageDetails} from '../index.js';
 import {renderSitemap} from './render-sitemap.js';
 
 export function buildPageEntries(

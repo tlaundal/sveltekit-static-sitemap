@@ -27,16 +27,18 @@
   "author": "Tobias Lundal",
   "license": "ISC",
   "devDependencies": {
-    "@commitlint/cli": "^17.4.2",
-    "@commitlint/config-conventional": "^17.4.2",
-    "@tsconfig/node-lts-strictest-esm": "^18.12.1",
-    "ava": "^5.1.1",
+    "@ava/typescript": "^4.1.0",
+    "@commitlint/cli": "^18.4.2",
+    "@commitlint/config-conventional": "^18.4.2",
+    "@tsconfig/node-lts": "^18.12.5",
+    "@tsconfig/strictest": "^2.0.2",
+    "ava": "^5.3.1",
     "eslint-plugin-tsdoc": "^0.2.17",
     "husky": "^8.0.3",
-    "typedoc": "^0.23.24",
-    "typedoc-plugin-markdown": "^3.14.0",
-    "typescript": "^4.9.5",
-    "xo": "^0.53.1"
+    "typedoc": "^0.25.3",
+    "typedoc-plugin-markdown": "^3.17.1",
+    "typescript": "^5.2.2",
+    "xo": "^0.56.0"
   },
   "peerDependencies": {
     "@sveltejs/kit": "^1.3.10"
@@ -47,14 +49,12 @@
     ]
   },
   "ava": {
-    "extensions": {
-      "ts": "module"
-    },
-    "nodeArguments": [
-      "--loader=ts-node/esm",
-      "--experimental-specifier-resolution=node",
-      "--no-warnings"
-    ]
+    "typescript": {
+      "rewritePaths": {
+        "src/": "lib/"
+      },
+      "compile": false
+    }
   },
   "xo": {
     "plugins": [
