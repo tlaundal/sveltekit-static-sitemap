@@ -40,6 +40,11 @@ export type PageDetails = {
 	 * describe archived URLs.
 	 */
 	changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never' | undefined;
+	/**
+	 * The hook will be called for each generating page URL.
+	 * It should return custom xml markup.
+	 */
+	hook?(pageUrl: string): string;
 };
 
 /**
