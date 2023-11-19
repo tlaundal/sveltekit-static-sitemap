@@ -25,14 +25,14 @@ Configuration options for sitemap generation.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `defaults` | [`PageDetails`](README.md#pagedetails) | Default options to use for all pages. **`Default Value`** ```ts { lastmod: new Date().toISOString(), changefreq: 'monthly', priority: 0.5, } ``` **`See`** [PageDetails](README.md#pagedetails) for documentation of the available fields. |
+| `defaults` | [`PageDetails`](README.md#pagedetails) | Default options to use for all pages. **`Default Value`** ```ts { lastmod: new Date().toISOString(), changefreq: 'monthly', priority: 0.5, } ``` To remove a field from the sitemap, set the value to `undefined`. The field can still be introduced for a specific page in `pages`. **`See`** [PageDetails](README.md#pagedetails) for documentation of the available fields. |
 | `origin` | `string` | The origin (eg. `https://your.site`) to use to build urls. **`Default Value`** `kit.prerender.origin` from your SvelteKit config. It will usually be better to configure the origin there instead of here. |
-| `pages` | `Record`<`string`, `Partial`<[`PageDetails`](README.md#pagedetails)\>\> | Details for specific pages. Can be used to force extra pages to be included in the sitemap, or to set specific properties on a page. The keys are the paths to the pages. For instance `/` or `/posts/1`. **`Example`** ```ts { pages: { '/': { priority: 1, changefreq: 'daily' }, // Explicitly included since it is not prerendered '/dynamic': {} } } ``` **`See`** [PageDetails](README.md#pagedetails) for documentation of the available fields. |
+| `pages` | `Record`<`string`, `Partial`<[`PageDetails`](README.md#pagedetails)\>\> | Details for specific pages. Can be used to force extra pages to be included in the sitemap, or to set specific properties on a page. The keys are the paths to the pages. For instance `/` or `/posts/1`. To remove a specific field for only this page, set the value to `undefined`. **`Example`** ```ts { pages: { '/': { priority: 1, changefreq: 'daily' }, // Explicitly included since it is not prerendered '/dynamic': {} } } ``` **`See`** [PageDetails](README.md#pagedetails) for documentation of the available fields. |
 | `sitemapFile` | `string` | The file to write the sitemap to. **`Default Value`** `sitemap.xml`. |
 
 #### Defined in
 
-[index.ts:47](https://github.com/tlaundal/sveltekit-static-sitemap/blob/a4b9e63/src/index.ts#L47)
+[index.ts:53](https://github.com/tlaundal/sveltekit-static-sitemap/blob/7231eb2/src/index.ts#L53)
 
 ___
 
@@ -41,6 +41,9 @@ ___
 Ƭ **PageDetails**: `Object`
 
 Details about a page in the sitemap.
+
+Any of these can be left undefined to skip that property for this page in
+the sitemap.
 
 **`See`**
 
@@ -51,19 +54,20 @@ Some of the documentation here is copied from there.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `changefreq` | ``"always"`` \| ``"hourly"`` \| ``"daily"`` \| ``"weekly"`` \| ``"monthly"`` \| ``"yearly"`` \| ``"never"`` | How frequently the page is likely to change. This value provides general information to search engines and may not correlate exactly to how often they crawl the page. The value `'always'` should be used to describe documents that change each time they are accessed. The value `'never'` should be used to describe archived URLs. |
-| `lastmod` | `string` | When the page was last modified. Should be in [W3C Datetime](https://www.w3.org/TR/NOTE-datetime) format, which is a subset of ISO8601. |
-| `priority` | `number` | Priority of this page relative to others on the site. Valid values range from 0.0 to 1.0. This value does not affect how your pages are compared to pages on other sites—it only lets the search engines know which pages you deem most important for the crawlers. |
+| `changefreq?` | ``"always"`` \| ``"hourly"`` \| ``"daily"`` \| ``"weekly"`` \| ``"monthly"`` \| ``"yearly"`` \| ``"never"`` | How frequently the page is likely to change. This value provides general information to search engines and may not correlate exactly to how often they crawl the page. The value `'always'` should be used to describe documents that change each time they are accessed. The value `'never'` should be used to describe archived URLs. |
+| `lastmod?` | `string` | When the page was last modified. Should be in [W3C Datetime](https://www.w3.org/TR/NOTE-datetime) format, which is a subset of ISO8601. |
+| `priority?` | `number` | Priority of this page relative to others on the site. Valid values range from 0.0 to 1.0. This value does not affect how your pages are compared to pages on other sites—it only lets the search engines know which pages you deem most important for the crawlers. |
+| `hook?` | (`pageUrl`: `string`) => `string` | The hook will be called for each generating page URL. It should return custom xml markup. |
 
 #### Defined in
 
-[index.ts:13](https://github.com/tlaundal/sveltekit-static-sitemap/blob/a4b9e63/src/index.ts#L13)
+[index.ts:14](https://github.com/tlaundal/sveltekit-static-sitemap/blob/7231eb2/src/index.ts#L14)
 
 ## Functions
 
 ### sitemapWrapAdapter
 
-▸ **sitemapWrapAdapter**(`adapter`, `options`): `Adapter`
+▸ **sitemapWrapAdapter**(`adapter`, `options?`): `Adapter`
 
 This function is the entry point for sveltekit-static-sitemap. It takes a
 SvelteKit adapter and returns a wrapped version which will retrieve a
@@ -75,12 +79,22 @@ fact that the sitemap is only generated at compile-time.
 
 See the `options` argument for how to add more pages.
 
+**`Example`**
+
+```ts
+{
+  kit: {
+    adapter: sitemapWrapAdapter(adapter())
+  }
+}
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `adapter` | `Adapter` | The SvelteKit adapter to wrap with sitemap generation. The sitemap will be provided to the adapter together with other static assets and prerendered pages. |
-| `options` | `Partial`<[`Options`](README.md#options)\> | Configuration of the sitemap. The `defaults` key defines the default values for each url in the sitemap. The `pages` key defines values for specific pages, and can be used to include extra urls in the sitemap. To include a new page with default values it is sufficient to let the value be `{}`. See the documentation of [the options object](README.md#options) for complete details. |
+| `options?` | `Partial`<[`Options`](README.md#options)\> | Configuration of the sitemap. The `defaults` key defines the default values for each url in the sitemap. The `pages` key defines values for specific pages, and can be used to include extra urls in the sitemap. To include a new page with default values it is sufficient to let the value be `{}`. See the documentation of [the options object](README.md#options) for complete details. |
 
 #### Returns
 
@@ -91,6 +105,8 @@ provided adapter from the first argument. This wrapped adapter will appear
 as `<adapter> + sitemap` in SvelteKit, where `<adapter>` is the name of the
 original adapter.
 
+ *
+
 #### Defined in
 
-[index.ts:174](https://github.com/tlaundal/sveltekit-static-sitemap/blob/a4b9e63/src/index.ts#L174)
+[index.ts:178](https://github.com/tlaundal/sveltekit-static-sitemap/blob/7231eb2/src/index.ts#L178)
